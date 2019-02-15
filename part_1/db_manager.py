@@ -12,7 +12,7 @@ class ManageDB():
 
         if ManageDB.__instance == None:
             ManageDB()
-        return manageDB.__instance
+        return ManageDB.__instance
 
 
     def __init__(self):
@@ -37,9 +37,10 @@ class ManageDB():
             db = sqlite3.connect('juggling_records')
             cur = db.cursor()
             with db:
-                cur.execute('Create table if not exists records (name text, country text, catches int)')
+                cur.execute('insert into records values (?, ?, ?)', (row_name, row_country, row_catches))
+            print('Successfully inserted row!')
         except sqlite3.Error as e:
-            print('Error creating database..')
+            print('Error inserting row (it was not updated).')
             print(e)
         finally:
             db.close()
