@@ -1,12 +1,15 @@
-import db_manager
+from db_manager import ManageDB
 
 class UI():
 
+    manageDB = ManageDB.getInstance()
     def add_row(self):
+        
         row_name = input('Please enter the name for the record you are entering:\n')
         row_country = input('Please enter the country for the record you are entering:\n')
-        row_catches = input('Please enter the number of catches for the record you are entering:\n')
-        return row_name, row_country, row_catches
+        row_catches = int(input('Please enter the number of catches for the record you are entering:\n'))
+
+        ManageDB.add_row(row_name, row_country, row_catches)
 
 
 
