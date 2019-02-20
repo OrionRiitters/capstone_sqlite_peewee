@@ -1,30 +1,36 @@
-from db_manager import ManageDB
+from orm_manager import ManageORM
 
 class UI():
+    """
+    This class is very close to the UI class in part_1 of this project. Though instead of
+    returning a list or tuple, ManageORM methods will return a 'ModelSelect' object. To see
+    the syntactical difference, compare line ~26 of this file to the corresponding line in
+    part 1
+    """
 
-    manageDB = ManageDB.getInstance()
+    manager = ManageORM()
 
 
     def search_by_name(self):
         """
-        This method takes user input and calls manageDB.read with the input as
+        This method takes user input and calls manager.get_row with the input as
         an argument
         """
 
         user_input = input('What is the name of the record holder you seek?\n')
         print('\n')
-        rows_returned = self.manageDB.read(user_input)
+        rows_returned = self.manager.get_row(user_input)
 
-        if rows_returned:
+        if rows_returned:s
             print('\n%-20s%-20s%-20s' % ('Name', 'Country', 'Number of Catches'))
-            [print('%-20s%-20s%-20i' % row) for row in rows_returned]
+            print('%-20s%-20s%-20i' % (rows_returned[0].name, rows_returned[0].country, rows_returned[0].catches))
         else:
             print('\nNo rows match your search criteria!\n')
 
 
     def add_row(self):
         """
-        This method takes user input and calls manageDB.add_row with the input
+        This method takes user input and calls manager.add_row with the input
         as the method's arguments
         """
         row_name = input('Please enter the name for the record you are entering:\n')
@@ -38,9 +44,9 @@ class UI():
             return
 
 
-        if not self.manageDB.read(row_name):
+        if not self.manager.get_row(row_name):
             print('\n')
-            self.manageDB.add_row(row_name, row_country, row_catches)
+            self.manager.add_row(row_name, row_country, row_catches)
             print('Successfully inserted row!\n')
         else:
             print('\nOops! That name is already in the database. Try removing it or updating the number of catches.\n')
@@ -48,8 +54,8 @@ class UI():
 
     def update_catches(self):
         """
-        This method takes user input and calls manageDB.read, manageDB.add_row
-        and manageDB.delete with the input as the method's arguments.
+        This method takes user input and calls manager.get_row, manageDB.add_row
+        and manager.delete_row with the input as the method's arguments.
         """
 
         name_input = input('Enter record holder name:\n')
@@ -59,11 +65,11 @@ class UI():
             print('Error: Please be sure to enter an integer for the number of catches. Row not updated.\n')
             return
 
-        row_returned = self.manageDB.read(name_input)
+        row_returned = self.manager.get_row(name_input)
         print('\n')
         if row_returned:
-            self.manageDB.delete(name_input)
-            self.manageDB.add_row(row_returned[0][0], row_returned[0][1], catches_input)
+            self.manager.delete_row(name_input)
+            self.manager.add_row(row_returned[0].name, row_returned[0].country, catches_input)
             print('Successfully updated row!\n')
         else:
             print('\nNo rows match your search criteria!')
@@ -77,8 +83,8 @@ class UI():
 
         name_input = input('Enter the name of the record holder you would like to delete:\n')
 
-        if self.manageDB.read(name_input):
-            self.manageDB.delete(name_input)
+        if self.manager.get_row(name_input):
+            self.manager.delete_row(name_input)
             print('Successfully deleted row!')
         else:
             print('\nNo rows match your search criteria!')
