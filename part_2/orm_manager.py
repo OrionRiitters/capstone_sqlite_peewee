@@ -29,10 +29,12 @@ class ManageORM():
         row_changed = Records.update(catches=row_catches).where(Records.name == row_name).execute()
         db.close()
 
+
     def delete_row(self, row_name):
         db.connect()
         row_deleted = Records.delete().where(Records.name == row_name).execute()
         db.close()
+
 
     def get_row(self, row_name):
         db.connect()

@@ -83,8 +83,10 @@ class UI():
         else:
             print('\nNo rows match your search criteria!')
 
+
     def exit_prog(self):
         exit()
+
 
     def incorrect_input(self):
         print('Please type a correct input option!\n')

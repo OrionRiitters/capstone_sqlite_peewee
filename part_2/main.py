@@ -33,5 +33,6 @@ def switch(ui, user_input):
         method()
     else:
         ui.incorrect_input()
+        
 
 main()
