@@ -1,7 +1,7 @@
 from peewee import *
 
 """
-The records class defines a table and inherits from BaseModel. The Meta subclass in BaseModel is a convention that defines the database to be used by any class inheriting from BaseModel.
+The records class defines a table and inherits from BaseModel. The Meta inner-class in BaseModel is a convention that defines the database to be used by any class inheriting from BaseModel.
 """
 
 class BaseModel(Model):
